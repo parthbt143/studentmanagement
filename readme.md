@@ -108,4 +108,9 @@ To build and run the application:
    ```bash
    mvn spring-boot:run
    ```
- 
+
+
+
+## Video Overview
+
+For a detailed overview of the application, please watch the following video: [Loom Video](https://www.loom.com/share/b4dd751a8c42410090674622348c63dc?sid=f5ae5554-5dec-48c5-af44-ac05889831aa)
