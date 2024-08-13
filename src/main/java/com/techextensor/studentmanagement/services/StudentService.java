@@ -6,6 +6,7 @@ import com.techextensor.studentmanagement.repositories.StudentRepository;
 import com.techextensor.studentmanagement.specifications.FilterCriteria;
 import com.techextensor.studentmanagement.specifications.SpecificationBuilder;
 import com.techextensor.studentmanagement.utils.AppException;
+import com.techextensor.studentmanagement.utils.Validators;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -22,6 +23,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     private final SpecificationBuilder<Student> specificationBuilder;
+
 
     public StudentService(
             StudentRepository studentRepository,
@@ -54,6 +56,7 @@ public class StudentService {
 
     public StudentDTO createStudent(StudentDTO studentDTO) {
         Student student = new Student(studentDTO);
+        Validators.validateObject(student);
         Student createdStudent = studentRepository.save(student);
         return new StudentDTO(createdStudent);
     }
@@ -61,6 +64,7 @@ public class StudentService {
     public StudentDTO updateStudent(Long id, StudentDTO studentDTO) throws AppException {
         getStudentById(id); // Check if the student exists
         Student student = new Student(studentDTO, id);
+        Validators.validateObject(student);
         Student updatedStudent = studentRepository.save(student);
         return new StudentDTO(updatedStudent);
     }
