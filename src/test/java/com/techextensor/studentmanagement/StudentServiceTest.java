@@ -1,16 +1,18 @@
 package com.techextensor.studentmanagement;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.techextensor.studentmanagement.DTOs.StudentDTO;
 import com.techextensor.studentmanagement.entities.Student;
 import com.techextensor.studentmanagement.repositories.StudentRepository;
 import com.techextensor.studentmanagement.services.StudentService;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class StudentServiceTest {
 
@@ -51,6 +53,25 @@ public class StudentServiceTest {
 
         // Verify save method was called once
         verify(studentRepository, times(1)).save(any(Student.class));
+    }
 
+    @Test
+    public void whenNameIsNull_thenThrowConstraintViolationException() {
+        // Arrange
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setName(null); // Name is null
+        studentDTO.setSurname("Doe");
+        studentDTO.setAge(20);
+
+        // Act & Assert
+        ConstraintViolationException thrown = assertThrows(
+                ConstraintViolationException.class,
+                () -> studentService.createStudent(studentDTO),
+                "Expected createStudent() to throw, but it didn't"
+        );
+
+        // Assert
+        String expectedMessage = "Name is mandatory";
+        assert (thrown.getMessage().contains(expectedMessage));
     }
 }
