@@ -1,7 +1,5 @@
 package com.techextensor.studentmanagement.utils;
 
-import java.util.Objects;
-
 public class CommonFunctions extends Throwable {
     /**
      * Returns the provided value if it is not null; otherwise, returns the default value.

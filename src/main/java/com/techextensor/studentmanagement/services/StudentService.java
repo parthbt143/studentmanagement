@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -43,7 +42,6 @@ public class StudentService {
         Specification<Student> spec = specificationBuilder.build(filters, pageable);
         Page<Student> studentPage = studentRepository.findAll(spec, pageable);
         return studentPage.map(StudentDTO::new);
-
     }
 
     public StudentDTO getStudentById(Long id) throws AppException {
